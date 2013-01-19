@@ -65,7 +65,19 @@ var bgcalendar = {};
     }
     
     function isLeapYear(year) {
-        return new Date(year, 1, 29).getDate() === 29;
+        var d = new Date();
+        d.setFullYear(year, 1, 29);
+        return d.getDate() === 29;
+    }
+    
+    function getDayNumber(year, month, date) {
+        var d1 = new Date,
+            d2 = new Date;
+            
+        d1.setFullYear(year, month - 1, date);
+        d2.setFullYear(year, 0, 1);
+        
+        return Math.floor((d1.getTime() - d2.getTime()) / DAY);
     }
     
     /**
@@ -77,9 +89,8 @@ var bgcalendar = {};
      */    
     bgcalendar.getDate = function (year, month, date) {
         var leap = isLeapYear(year),
-            diff = new Date(year, month - 1, date) - new Date(year, 0, 1),
-            day = Math.floor(diff / DAY),
-            date;
+            day = getDayNumber(year, month, date),
+            bgdate;
             
         if (leap) {
             if (day > LEAP_DAY) {
@@ -90,8 +101,8 @@ var bgcalendar = {};
             }        
         }
         if (day > NEW_YEAR_DAY) year++;
-        date = map[day];
-        return {year : year + DIFF_YEARS, month : date[1], date : date[0]};
+        bgdate = map[day];
+        return {year : year + DIFF_YEARS, month : bgdate[1], date : bgdate[0]};
     };
     
     /**
