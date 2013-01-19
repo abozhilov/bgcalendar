@@ -1,6 +1,8 @@
 /**
+ * @name bgcalendar
+ * @version 0.5.0 
+ * @license MIT, 2013
  * @author Asen Bozhilov
- * @license MIT, 2013 
  */
 var bgcalendar = {};
 (function () {
