@@ -14,7 +14,7 @@ var bgcalendar = {};
         YEARS_COUNT = 12,
         
         LEAP_DAY_NAME = 'Високосен Ден',
-        NEW_YEAR_DAY = 'Нова Година',    
+        NEW_YEAR_DAY_NAME = 'Нова Година',    
         BG_MONTHS = [
             'Алем', 
             'Тутом', 
@@ -124,7 +124,7 @@ var bgcalendar = {};
             month = date.month, 
             date = date.date;
         if (date == 0) {
-            return (month == 0 ? NEW_YEAR_DAY : LEAP_DAY_NAME) + ', ' + year;
+            return (month == 0 ? NEW_YEAR_DAY_NAME : LEAP_DAY_NAME) + ', ' + year;
         }        
         return date + ' ' + BG_MONTHS[month - 1] + ', ' + year + ' ' + bgcalendar.getYearType(year);
     };
