@@ -1,6 +1,6 @@
 /**
  * @name bgcalendar
- * @version 0.6.0
+ * @version 0.7.0
  * @author Asen Bozhilov
  * @license MIT, 2013 
  */
@@ -77,7 +77,10 @@ var bgcalendar = {};
         d1.setFullYear(year, month - 1, date);
         d2.setFullYear(year, 0, 1);
         
-        return Math.floor((d1.getTime() - d2.getTime()) / DAY);
+        var millis = d1.getTime() - d2.getTime();
+        var rem = millis % DAY;
+        var dayNumber = ((millis - rem ) / DAY )  +   (rem > 0 ? 1 : 0);
+        return dayNumber;
     }
     
     /**
