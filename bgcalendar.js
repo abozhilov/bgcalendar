@@ -77,10 +77,7 @@ var bgcalendar = {};
         d1.setFullYear(year, month - 1, date);
         d2.setFullYear(year, 0, 1);
         
-        var millis = d1.getTime() - d2.getTime();
-        var rem = millis % DAY;
-        var dayNumber = ((millis - rem ) / DAY )  +   (rem > 0 ? 1 : 0);
-        return dayNumber;
+        return Math.ceil((d1.getTime() - d2.getTime() ) / DAY);
     }
     
     /**
