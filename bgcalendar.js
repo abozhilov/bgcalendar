@@ -1,8 +1,8 @@
 /**
  * @name bgcalendar
- * @version 0.5.0 
- * @license MIT, 2013
+ * @version 0.7.0
  * @author Asen Bozhilov
+ * @license MIT, 2013 
  */
 var bgcalendar = {};
 (function () {
@@ -23,7 +23,7 @@ var bgcalendar = {};
             'Вечем', 
             'Шехтем', 
             'Сетем', 
-            'Естем', 
+            'Бехти', 
             'Нунтем', 
             'Елем', 
             'Ениалем', 
@@ -39,9 +39,9 @@ var bgcalendar = {};
             'Докс',  //Глиган
             'Сомор', //Мишка
             'Шегор', //Вол
-            'Борс',  //Тигър
+            'Барс',  //Тигър
             'Дван',  //Заек
-            'Вер'    //Дракон
+            'Верени'    //Дракон
         ];
     
     //Build lookup table
@@ -77,7 +77,7 @@ var bgcalendar = {};
         d1.setFullYear(year, month - 1, date);
         d2.setFullYear(year, 0, 1);
         
-        return Math.floor((d1.getTime() - d2.getTime()) / DAY);
+        return Math.ceil((d1.getTime() - d2.getTime() ) / DAY);
     }
     
     /**
@@ -128,4 +128,44 @@ var bgcalendar = {};
         }        
         return date + ' ' + BG_MONTHS[month - 1] + ', ' + year + ' ' + bgcalendar.getYearType(year);
     };
+})();
+
+//Utilities
+var bgutil = {};
+(function () {
+    var DIFF_YEARS = 4768,
+        INVALID_DATE = 'Невалидна дата',
+        INVALID_YEAR = 'Невалидна година';
+    
+    bgutil.isValidDate = function (year, month, date) {
+        var d = new Date;
+        d.setFullYear(year, month - 1, date);
+        return d.getFullYear() == year && d.getMonth() == (month - 1) && d.getDate() == date;
+    }
+    
+    bgutil.convertDate = function() {
+        var date = document.getElementById('date').value.split('-'),
+            out = document.getElementById('bgdate');
+            
+        if (bgutil.isValidDate(+date[0], +date[1], +date[2])) {
+            out.innerHTML = bgcalendar.formatDate(bgcalendar.getDate(+date[0], +date[1], +date[2]));
+        }
+        else {
+            out.innerHTML = INVALID_DATE;
+        }
+    }
+
+    bgutil.printYear = function() {
+        var strYear = document.getElementById('year').value,
+            year = +strYear,
+            ch = document.getElementById('chtype').checked,
+            out = document.getElementById('bgyear-type');
+        
+        if (year == strYear && year > 0) {
+            out.innerHTML = bgcalendar.getYearType(ch ? year + DIFF_YEARS : year);
+        }
+        else {
+            out.innerHTML = INVALID_YEAR;
+        }
+    }
 })();
